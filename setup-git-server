@@ -1,0 +1,19 @@
+#!/bin/sh
+mkdir -p /var/repo/$1
+cd /var/repo/$1
+git init --bare
+cd hooks
+hookCommand="#!/bin/sh\ngit --work-tree=$2  --git-dir=/var/repo/$1 checkout -f"
+
+echo $hookCommand >> post-receive
+echo "Post-receive created at /var/repo/$1/hooks"
+chmod +x post-receive
+
+chmod -R 777 /var/repo
+echo "Permission granted to repo"
+
+echo "Setup completed succesfully 😅"
+echo "You may now push to following url\n"
+
+myIp=$(curl -s ifconfig.me)
+echo "git remote add origin ssh://$USER@$myIp/var/repo/$1"
