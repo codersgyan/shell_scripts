@@ -9,8 +9,9 @@ echo $hookCommand >> post-receive
 echo "Post-receive created at /var/repo/$1/hooks"
 chmod +x post-receive
 
-chmod -R 777 /var/repo
-echo "Permission granted to repo"
+chmod -R 755 /var/repo
+chmod -R 755 $2
+echo "Permission granted to repo and work dir"
 
 echo "Setup completed succesfully 😅"
 echo "You may now push to following url\n"
